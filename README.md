@@ -1,5 +1,4 @@
-# platform-api-php
-Survos php api client
+# Survos php api client
 
 ## Authenticating
 ```php
