@@ -8,22 +8,18 @@ use GuzzleHttp\Client;
 
 class SurvosClient
 {
-    const ENDPOINT_TPL = 'http://%s.l.survos.net/app_dev.php/api1.0/';
-
     /** @var string */
     private $endpoint;
-    /** @var string */
-    private $project;
+
     /** @var string */
     private $accessToken;
+
     /** @var array */
     private $loggedUser;
 
-    public function __construct($project = 'demo')
+    public function __construct($endpoint = 'https://demo.survos.com/api1.0/')
     {
-        $this->project = $project;
-        $this->endpoint = sprintf(self::ENDPOINT_TPL, $project);
-        $this->initControllers();
+        $this->endpoint = $endpoint;
     }
 
     public function authorize($username, $password)
@@ -65,24 +61,31 @@ class SurvosClient
         return $this->loggedUser;
     }
 
-    /**
-     * @return string
-     */
-    public function getProject()
-    {
-        return $this->project;
-    }
-
-
     /** @var AssignmentResource */
-    public $assignment;
+    private $assignment;
 
     /** @var UserResource */
-    public $user;
+    private $user;
 
-    private function initControllers()
+    /**
+     * @return AssignmentResource
+     */
+    public function getAssignment()
     {
-        $this->assignment = new AssignmentResource($this);
-        $this->user = new UserResource($this);
+        if (is_null($this->assignment)) {
+            $this->assignment = new AssignmentResource($this);
+        }
+        return $this->assignment;
+    }
+
+    /**
+     * @return UserResource
+     */
+    public function getUser()
+    {
+        if (is_null($this->user)) {
+            $this->user = new UserResource($this);
+        }
+        return $this->user;
     }
 }

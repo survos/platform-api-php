@@ -2,43 +2,30 @@
 require __DIR__ . '/../vendor/autoload.php';
 
 use Survos\Client\SurvosClient;
-use Survos\Client\Param\CgetParam;
 
-$client = new SurvosClient('demo');
+$client = new SurvosClient('https://demo.survos.com/api1.0/');
 if (!$client->authorize('otest', 'tt')) {
     throw new \Exception('Wrong credentials!');
 }
 
-//user post
+//user save
 $data = [
     'username' => 'john85210101',
     'email' => 'john85210101@gmail.com',
     'name' => 'Nick',
 ];
-$item = $client->user->post($data);
+$item = $client->getUser()->save($data);
 $id = $item['id'];
 
-//user put
-$item['name'] = 'John';
-$item = $client->user->put($id, $item);
+//user getById
+$item = $client->getUser()->getById($id);
 
-//user patch
-$item = $client->user->patch($id, ['name' => 'Nick']);
-
-//user get
-$item = $client->user->get($id);
-
-//user cget
+//user getList
 $page = 1;
 $maxPerPage = 10;
 $criteria = ['id' => $id];
-$param = new CgetParam($page, $maxPerPage, $criteria);
-$response = $client->user->cget($param);
+$response = $client->getUser()->getList($page, $maxPerPage, $criteria);
+
 
 //user delete
-$result = $client->user->delete($id);
-
-
-//assignment cget
-$param = new CgetParam(1, 10);
-$data = $client->assignment->cget($param);
+$result = $client->getUser()->deleteById($id);

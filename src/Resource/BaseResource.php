@@ -60,7 +60,7 @@ abstract class BaseResource
      * @param CgetParam $param
      * @return array
      */
-    public function cget($param)
+    protected function cget($param)
     {
         $guzzle = $this->getGuzzle();
         $response = $guzzle->get($this->resource, ['query' => $param->getParams()]);
@@ -68,7 +68,7 @@ abstract class BaseResource
         return $this->parseResponse($response);
     }
 
-    public function get($id)
+    protected function get($id)
     {
         $guzzle = $this->getGuzzle();
         $response = $guzzle->get($this->resource.'/'.$id);
@@ -76,7 +76,7 @@ abstract class BaseResource
         return $this->parseResponse($response);
     }
 
-    public function delete($id)
+    protected function delete($id)
     {
         $guzzle = $this->getGuzzle();
         $response = $guzzle->delete($this->resource.'/'.$id);
@@ -84,7 +84,7 @@ abstract class BaseResource
         return true;
     }
 
-    public function post(array $data)
+    protected function post(array $data)
     {
         $guzzle = $this->getGuzzle();
         $response = $guzzle->post($this->resource, ['form_params' => $data]);
@@ -92,7 +92,7 @@ abstract class BaseResource
         return $this->parseResponse($response);
     }
 
-    public function put($id, array $data)
+    protected function put($id, array $data)
     {
         $guzzle = $this->getGuzzle();
         $response = $guzzle->put($this->resource.'/'.$id, ['form_params' => $data]);
@@ -100,7 +100,7 @@ abstract class BaseResource
         return $this->parseResponse($response);
     }
 
-    public function patch($id, array $data)
+    protected function patch($id, array $data)
     {
         $guzzle = $this->getGuzzle();
         $response = $guzzle->patch($this->resource.'/'.$id, ['form_params' => $data]);
