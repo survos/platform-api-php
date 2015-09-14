@@ -61,46 +61,4 @@ class SurvosClient
     {
         return $this->loggedUser;
     }
-
-    /** @var AssignmentResource */
-    private $assignment;
-
-    /** @var UserResource */
-    private $user;
-
-    /** @var MemberResource */
-    private $member;
-
-    /**
-     * @return AssignmentResource
-     */
-    public function getAssignment()
-    {
-        if (is_null($this->assignment)) {
-            $this->assignment = new AssignmentResource($this);
-        }
-        return $this->assignment;
-    }
-
-    /**
-     * @return UserResource
-     */
-    public function getUser()
-    {
-        if (is_null($this->user)) {
-            $this->user = new UserResource($this);
-        }
-        return $this->user;
-    }
-
-    /**
-     * @return MemberResource
-     */
-    public function getMember()
-    {
-        if (is_null($this->member)) {
-            $this->member = new MemberResource($this);
-        }
-        return $this->member;
-    }
 }
