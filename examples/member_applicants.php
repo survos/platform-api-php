@@ -12,11 +12,23 @@ if (!$client->authorize($config['username'], $config['password'])) {
 $data = $client->getMember()->getApplicants(1, 100);
 $applicants = $data['items'];
 
-$ids = [];
+$acceptIds = [];
+$rejectIds = [];
 foreach ($applicants as $applicant) {
-    $ids[] = $applicant['id'];
+    $id = $applicant['id'];
+    if (isEligible($applicant)) {
+        $acceptIds[] = $id;
+    } else {
+        $rejectIds[] = $id;
+    }
 }
-if (!empty($ids)) {
-    $action = rand(0, 1) === 1 ? 'accept' : 'reject';
-    $result = $client->getMember()->setApplicantsStatus($ids, $action);
+if (!empty($acceptIds)) {
+    $client->getMember()->setApplicantsStatus($acceptIds, 'accept', null, 'qualified by age');
+}
+if (!empty($rejectIds)) {
+    $client->getMember()->setApplicantsStatus($rejectIds, 'reject', null, 'Sorry, you don\'t qualify');
+}
+
+function isEligible($applicant){
+    return isset($applicant['submitted']) && $applicant['submitted']['age'] < 21;
 }
