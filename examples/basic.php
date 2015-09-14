@@ -3,8 +3,9 @@ require __DIR__ . '/../vendor/autoload.php';
 
 use Survos\Client\SurvosClient;
 
-$client = new SurvosClient('https://demo.survos.com/api1.0/');
-if (!$client->authorize('otest', 'tt')) {
+$config = json_decode(file_get_contents(__DIR__.'/config.json'), true);
+$client = new SurvosClient($config['endpoint']);
+if (!$client->authorize($config['username'], $config['password'])) {
     throw new \Exception('Wrong credentials!');
 }
 

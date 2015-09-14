@@ -3,6 +3,7 @@
 namespace Survos\Client;
 
 use Survos\Client\Resource\AssignmentResource;
+use Survos\Client\Resource\MemberResource;
 use Survos\Client\Resource\UserResource;
 use GuzzleHttp\Client;
 
@@ -67,6 +68,9 @@ class SurvosClient
     /** @var UserResource */
     private $user;
 
+    /** @var MemberResource */
+    private $member;
+
     /**
      * @return AssignmentResource
      */
@@ -87,5 +91,16 @@ class SurvosClient
             $this->user = new UserResource($this);
         }
         return $this->user;
+    }
+
+    /**
+     * @return MemberResource
+     */
+    public function getMember()
+    {
+        if (is_null($this->member)) {
+            $this->member = new MemberResource($this);
+        }
+        return $this->member;
     }
 }
