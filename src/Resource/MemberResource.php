@@ -37,9 +37,8 @@ class MemberResource extends BaseResource
     public function setApplicantsStatus(array $ids, $action, $comment = null, $message = null)
     {
         $guzzle = $this->getGuzzle();
-        $response = $guzzle->patch($this->resource.'/applicants/status', ['form_params' => [
+        $response = $guzzle->patch($this->resource.'/applicants/'.$action, ['form_params' => [
             'ids' => $ids,
-            'action' => $action,
             'comment' => $comment,
             'message' => $message,
         ]]);
