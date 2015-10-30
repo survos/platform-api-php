@@ -14,21 +14,13 @@ $resource = new MemberResource($client);
 $data = $resource->getList(1, 100, ['enrollment_status_code' => 'applicant']);
 $applicants = $data['items'];
 
-$acceptIds = [];
-$rejectIds = [];
 foreach ($applicants as $applicant) {
     $id = $applicant['id'];
     if (isEligible($applicant)) {
-        $acceptIds[] = $id;
+        $resource->setApplicantsStatus($id, 'accept', null, 'qualified by age');
     } else {
-        $rejectIds[] = $id;
+        $resource->setApplicantsStatus($id, 'reject', null, 'Sorry, you don\'t qualify');
     }
-}
-if (!empty($acceptIds)) {
-    $resource->setApplicantsStatus($acceptIds, 'accept', null, 'qualified by age');
-}
-if (!empty($rejectIds)) {
-    $resource->setApplicantsStatus($rejectIds, 'reject', null, 'Sorry, you don\'t qualify');
 }
 
 function isEligible($applicant){
