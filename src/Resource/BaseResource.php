@@ -28,7 +28,7 @@ abstract class BaseResource
         return new Client([
             'base_uri' => $this->client->getEndpoint(),
             'headers' => ['authorization' => 'Bearer '.$this->client->getAccessToken()],
-            'http_errors' => false
+            'http_errors' => false,
         ]);
     }
 
