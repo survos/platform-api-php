@@ -1,3 +1,4 @@
 /.idea
 /vendor
 /examples/config.json
+.php_cs.cache
