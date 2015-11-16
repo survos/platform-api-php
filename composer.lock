@@ -4,7 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "382d12d57269ef93f8df683dcc5c320e",
+    "hash": "233c950584f42dac000dd2867a176de3",
+    "content-hash": "55f9df714381185b401d21f205df52b3",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -12,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/guzzle.git",
-                "reference": "ef728b658fe6836823aa9e7d673cb08dab216b7d"
+                "reference": "a21d3ccb7ea39a5256079adaa7f0901fde02a5b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/ef728b658fe6836823aa9e7d673cb08dab216b7d",
-                "reference": "ef728b658fe6836823aa9e7d673cb08dab216b7d",
+                "url": "https://api.github.com/repos/guzzle/guzzle/zipball/a21d3ccb7ea39a5256079adaa7f0901fde02a5b0",
+                "reference": "a21d3ccb7ea39a5256079adaa7f0901fde02a5b0",
                 "shasum": ""
             },
             "require": {
@@ -66,7 +67,7 @@
                 "rest",
                 "web service"
             ],
-            "time": "2015-09-08 20:05:33"
+            "time": "2015-11-15 09:29:07"
         },
         {
             "name": "guzzlehttp/promises",
@@ -74,12 +75,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/promises.git",
-                "reference": "97fe7210def29451ec74923b27e552238defd75a"
+                "reference": "b1e1c0d55f8083c71eda2c28c12a228d708294ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/promises/zipball/97fe7210def29451ec74923b27e552238defd75a",
-                "reference": "97fe7210def29451ec74923b27e552238defd75a",
+                "url": "https://api.github.com/repos/guzzle/promises/zipball/b1e1c0d55f8083c71eda2c28c12a228d708294ea",
+                "reference": "b1e1c0d55f8083c71eda2c28c12a228d708294ea",
                 "shasum": ""
             },
             "require": {
@@ -117,20 +118,20 @@
             "keywords": [
                 "promise"
             ],
-            "time": "2015-08-15 19:37:21"
+            "time": "2015-10-15 22:28:00"
         },
         {
             "name": "guzzlehttp/psr7",
-            "version": "1.2.0",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/guzzle/psr7.git",
-                "reference": "4ef919b0cf3b1989523138b60163bbcb7ba1ff7e"
+                "reference": "4d0bdbe1206df7440219ce14c972aa57cc5e4982"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/guzzle/psr7/zipball/4ef919b0cf3b1989523138b60163bbcb7ba1ff7e",
-                "reference": "4ef919b0cf3b1989523138b60163bbcb7ba1ff7e",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/4d0bdbe1206df7440219ce14c972aa57cc5e4982",
+                "reference": "4d0bdbe1206df7440219ce14c972aa57cc5e4982",
                 "shasum": ""
             },
             "require": {
@@ -175,7 +176,7 @@
                 "stream",
                 "uri"
             ],
-            "time": "2015-08-15 19:32:36"
+            "time": "2015-11-03 01:34:55"
         },
         {
             "name": "psr/http-message",
