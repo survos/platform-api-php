@@ -9,5 +9,10 @@
     "psr-4": {
       "Survos\\Client\\": "src/"
     }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "v1.0"
+    }
   }
 }
