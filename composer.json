@@ -4,7 +4,7 @@
   "require": {
     "guzzlehttp/guzzle": "~6.0"
   },
-  "minimum-stability": "dev",
+  "license": "proprietary",
   "autoload": {
     "psr-4": {
       "Survos\\Client\\": "src/"
