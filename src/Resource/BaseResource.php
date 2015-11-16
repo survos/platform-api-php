@@ -88,7 +88,7 @@ abstract class BaseResource
     {
         $guzzle = $this->getGuzzle();
         $response = $guzzle->post($this->resource, ['form_params' => $data]);
-        $this->assertResponse($response, 201);
+        $this->assertResponse($response, [200]);
         return $this->parseResponse($response);
     }
 
