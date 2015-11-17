@@ -11,7 +11,9 @@ trait SaveHelper
     public function save(array $data)
     {
         if (isset($data['id'])) {
-            return $this->patch($data['id'], $data);
+            $id = $data['id'];
+            unset($data['id']);
+            return $this->patch($id, $data);
         } else {
             return $this->post($data);
         }
