@@ -11,7 +11,7 @@ use Survos\Client\Resource\Helper\SaveHelper;
 
 class ProjectResource extends BaseResource
 {
-    use SaveHelper, GetListHelper, GetByIdHelper, DeleteByIdHelper, GetByCodeHelper;
+    use SaveHelper, GetListHelper, GetByIdHelper, DeleteByIdHelper, GetByCodeHelper, GetOneByFieldHelper;
 
     protected $resource = 'projects';
 

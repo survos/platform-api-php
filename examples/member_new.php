@@ -12,6 +12,8 @@ if (!$client->authorize($config['username'], $config['password'])) {
 }
 
 // get all projects
+$userResource = new \Survos\Client\Resource\UserResource($client);
+//$user= $userResource->getOneBy('username', 'tac');
 $pResource = new ProjectResource($client);
 $project = $pResource->getByCode('demo');
 
