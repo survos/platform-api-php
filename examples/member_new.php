@@ -20,10 +20,13 @@ $project = $pResource->getByCode('demo');
 $resource = new MemberResource($client);
 $resource->save(
     [
-        'code'                 => "new_project_code3",
-        'phone_within_project' => '+447834274476',
-        'email_within_project' => 'piogrek+apitest3@gmail.com',
+        'code'                 => "new_project_code4",
+        'phone_within_project' => '+447834274473',
+        'email_within_project' => 'piogrek+apitest4@gmail.com',
         'project_id'           => $project['id'],
     ]
 );
+
+$res = $pResource->addModule('demo', 'field');
+echo $res;
 

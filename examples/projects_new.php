@@ -12,7 +12,7 @@ if (!$client->authorize($config['username'], $config['password'])) {
 
 // get all projects
 $resource = new ProjectResource($client);
-$resource->save(
+$res = $resource->save(
     [
         'title'       => "new poject",
         'code'        => "new_project_code",

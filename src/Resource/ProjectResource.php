@@ -16,4 +16,13 @@ class ProjectResource extends BaseResource
 
     protected $resource = 'projects';
 
+    public function addModule($projectCode, $moduleCode)
+    {
+        $project = $this->getOneBy('code', $projectCode);
+        $guzzle = $this->getGuzzle();
+        $response = $guzzle->post("{$this->resource}/{$project['id']}/add-module/{$moduleCode}", []);
+        $this->assertResponse($response, 200);
+
+        return $this->parseResponse($response);
+    }
 }
