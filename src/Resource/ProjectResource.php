@@ -7,6 +7,7 @@ use Survos\Client\Resource\Helper\DeleteByIdHelper;
 use Survos\Client\Resource\Helper\GetByCodeHelper;
 use Survos\Client\Resource\Helper\GetByIdHelper;
 use Survos\Client\Resource\Helper\GetListHelper;
+use Survos\Client\Resource\Helper\GetOneByFieldHelper;
 use Survos\Client\Resource\Helper\SaveHelper;
 
 class ProjectResource extends BaseResource
