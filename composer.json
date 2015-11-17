@@ -1,10 +1,11 @@
 {
   "name": "survos/platform-api-php",
   "description": "Survos php api client",
+  "license": "proprietary",
   "require": {
     "guzzlehttp/guzzle": "~6.0"
   },
-  "license": "proprietary",
+  "minimum-stability": "dev",
   "autoload": {
     "psr-4": {
       "Survos\\Client\\": "src/"
