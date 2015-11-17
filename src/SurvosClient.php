@@ -29,6 +29,9 @@ class SurvosClient
         $response = $guzzle->request('POST', $this->endpoint.'security/login', ['form_params' => [
             'username' => $username, 'password' => $password
         ]]);
+        if (404 == $response->getStatusCode()) {
+            throw new \Exception("Invalid login route: " . $endpoint);
+        }
         if (200 !== $response->getStatusCode()) {
             return false;
         }
