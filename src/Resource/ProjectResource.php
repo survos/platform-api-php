@@ -9,6 +9,7 @@ use Survos\Client\Resource\Helper\GetByIdHelper;
 use Survos\Client\Resource\Helper\GetListHelper;
 use Survos\Client\Resource\Helper\GetOneByFieldHelper;
 use Survos\Client\Resource\Helper\SaveHelper;
+use Survos\Client\SurvosException;
 
 class ProjectResource extends BaseResource
 {
@@ -19,6 +20,9 @@ class ProjectResource extends BaseResource
     public function addModule($projectCode, $moduleCode)
     {
         $project = $this->getOneBy('code', $projectCode);
+        if (!$project) {
+            throw new SurvosException("Project '$projectCode' not found'");
+        }
         $guzzle = $this->getGuzzle();
         $response = $guzzle->post("{$this->resource}/{$project['id']}/add-module/{$moduleCode}", []);
         $this->assertResponse($response, 200);
