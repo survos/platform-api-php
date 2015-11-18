@@ -9,7 +9,7 @@ use Survos\Client\Resource\Helper\SaveHelper;
 
 class MemberResource extends BaseResource
 {
-    use GetListHelper,SaveHelper, GetByIdHelper;
+    use GetListHelper,SaveHelper, GetByIdHelper, GetOneByFieldHelper;
 
     protected $resource = 'members';
 
