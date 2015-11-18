@@ -19,7 +19,7 @@ class ProjectResource extends BaseResource
 
     public function addModule($projectCode, $moduleCode)
     {
-        $project = $this->getOneBy('code', $projectCode);
+        $project = $this->getOneBy(['code' => $projectCode]);
         if (!$project) {
             throw new SurvosException("Project '$projectCode' not found'");
         }

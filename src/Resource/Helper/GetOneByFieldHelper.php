@@ -9,13 +9,17 @@ trait GetOneByFieldHelper
      * @param $id
      * @return array
      */
-    public function getOneBy($field, $value)
+    public function getOneBy(array $criteria)
     {
+        $cmpList = [];
+        foreach($criteria as $key => $val) {
+            $cmpList[$key] = SurvosCriteria::EQUAL;
+        }
         $items = $this->getList(
             $page = 1,
             $maxPerPage = 1,
-            $criteria = [$field => $value],
-            $criteriaCmp = [$field => SurvosCriteria::EQUAL]
+            $criteria = $criteria,
+            $criteriaCmp = $cmpList
         );
 
         // return first item

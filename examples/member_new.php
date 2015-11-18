@@ -20,9 +20,9 @@ $project = $pResource->getByCode('demo');
 $resource = new MemberResource($client);
 $resource->save(
     [
-        'code'                 => "new_project_code4",
-        'phone_within_project' => '+447834274473',
-        'email_within_project' => 'piogrek+apitest4@gmail.com',
+        'code'                 => "new_project_code5",
+        'phone_within_project' => '+447834274472',
+        'email_within_project' => 'piogrek+apitest5@gmail.com',
         'project_id'           => $project['id'],
     ]
 );
