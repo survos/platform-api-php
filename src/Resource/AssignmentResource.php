@@ -8,5 +8,6 @@ class AssignmentResource extends BaseResource
 {
     use GetListHelper;
 
+    /** @var string */
     protected $resource = 'assignments';
 }

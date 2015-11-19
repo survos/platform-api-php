@@ -10,6 +10,7 @@ use Survos\Client\Param\CgetParam;
 
 abstract class BaseResource
 {
+    /** @var string */
     protected $resource;
 
     /** @var SurvosClient */
@@ -23,6 +24,9 @@ abstract class BaseResource
         $this->client = $client;
     }
 
+    /**
+     * @return Client
+     */
     protected function getGuzzle()
     {
         return new Client([
@@ -68,6 +72,11 @@ abstract class BaseResource
         return $this->parseResponse($response);
     }
 
+    /**
+     * @param int $id
+     * @return array
+     * @throws SurvosException
+     */
     protected function get($id)
     {
         $guzzle = $this->getGuzzle();
@@ -76,6 +85,11 @@ abstract class BaseResource
         return $this->parseResponse($response);
     }
 
+    /**
+     * @param int $id
+     * @return bool
+     * @throws SurvosException
+     */
     protected function delete($id)
     {
         $guzzle = $this->getGuzzle();
@@ -84,6 +98,11 @@ abstract class BaseResource
         return true;
     }
 
+    /**
+     * @param array $data
+     * @return array
+     * @throws SurvosException
+     */
     protected function post(array $data)
     {
         $guzzle = $this->getGuzzle();
@@ -92,6 +111,12 @@ abstract class BaseResource
         return $this->parseResponse($response);
     }
 
+    /**
+     * @param int $id
+     * @param array $data
+     * @return array
+     * @throws SurvosException
+     */
     protected function put($id, array $data)
     {
         $guzzle = $this->getGuzzle();
@@ -100,6 +125,12 @@ abstract class BaseResource
         return $this->parseResponse($response);
     }
 
+    /**
+     * @param int $id
+     * @param array $data
+     * @return array
+     * @throws SurvosException
+     */
     protected function patch($id, array $data)
     {
         $guzzle = $this->getGuzzle();

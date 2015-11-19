@@ -12,6 +12,7 @@ class MemberResource extends BaseResource
 {
     use GetListHelper,SaveHelper, GetByIdHelper, GetOneByFieldHelper;
 
+    /** @var string */
     protected $resource = 'members';
 
     /**
