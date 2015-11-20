@@ -18,8 +18,8 @@ trait GetOneByFieldHelper
         $items = $this->getList(
             $page = 1,
             $maxPerPage = 1,
-            $criteria = $criteria,
-            $criteriaCmp = $cmpList
+            $criteria,
+            $cmpList
         );
 
         // return first item
