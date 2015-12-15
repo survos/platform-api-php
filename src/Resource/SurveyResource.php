@@ -14,4 +14,17 @@ class SurveyResource extends BaseResource
 
     /** @var string */
     protected $resource = 'surveys';
+
+    /**
+     * @param integer $id
+     * @return array
+     * @throws \Survos\Client\SurvosException
+     */
+    public function getExportJson($id)
+    {
+        $guzzle = $this->getGuzzle();
+        $response = $guzzle->get("{$this->resource}/{$id}/export-json/", []);
+        $this->assertResponse($response, 200);
+        return $this->parseResponse($response);
+    }
 }
