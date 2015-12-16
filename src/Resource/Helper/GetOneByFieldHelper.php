@@ -6,7 +6,8 @@ use Survos\Client\SurvosCriteria;
 trait GetOneByFieldHelper
 {
     /**
-     * @param $id
+     * @param array $criteria
+     * @param array $params
      * @return array
      */
     public function getOneBy(array $criteria, $params = [])

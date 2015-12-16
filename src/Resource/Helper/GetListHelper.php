@@ -11,6 +11,7 @@ trait GetListHelper
      * @param array|null $criteria
      * @param array|null $criteriaCmp
      * @param array|null $order
+     * @param array $other
      * @return array
      */
     public function getList(
@@ -22,7 +23,6 @@ trait GetListHelper
         $other = []
     ) {
         $param = new CgetParam($page, $maxPerPage, $criteria, $criteriaCmp, $order, $other);
-
         return $this->cget($param);
     }
 }
