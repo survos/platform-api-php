@@ -9,7 +9,7 @@ trait GetOneByFieldHelper
      * @param $id
      * @return array
      */
-    public function getOneBy(array $criteria)
+    public function getOneBy(array $criteria, $params = [])
     {
         $cmpList = [];
         foreach($criteria as $key => $val) {
@@ -19,7 +19,9 @@ trait GetOneByFieldHelper
             $page = 1,
             $maxPerPage = 1,
             $criteria,
-            $cmpList
+            $cmpList,
+            null,
+            $params
         );
 
         // return first item
