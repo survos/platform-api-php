@@ -23,7 +23,16 @@ class SurveyResource extends BaseResource
     public function getExportJson($id)
     {
         $guzzle = $this->getGuzzle();
-        $response = $guzzle->get("{$this->resource}/{$id}/export-json/", []);
+        $response = $guzzle->get("{$this->resource}/{$id}/export-json", []);
+        $this->assertResponse($response, 200);
+
+        return $this->parseResponse($response);
+    }
+
+    public function importSurvey($data)
+    {
+        $guzzle = $this->getGuzzle();
+        $response = $guzzle->post("{$this->resource}/import", ['form_params' => $data]);
         $this->assertResponse($response, 200);
         return $this->parseResponse($response);
     }
