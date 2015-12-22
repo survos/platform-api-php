@@ -18,11 +18,21 @@ class SurvosClient
     /** @var array */
     private $loggedUser;
 
+    /**
+     * SurvosClient constructor.
+     * @param string $endpoint
+     */
     public function __construct($endpoint = 'https://demo.survos.com/api1.0/')
     {
         $this->endpoint = $endpoint;
     }
 
+    /**
+     * @param string $username
+     * @param string $password
+     * @return bool
+     * @throws \Exception
+     */
     public function authorize($username, $password)
     {
         $guzzle = new Client(['http_errors' => false]);
@@ -30,7 +40,7 @@ class SurvosClient
             'username' => $username, 'password' => $password
         ]]);
         if (404 == $response->getStatusCode()) {
-            throw new \Exception("Invalid login route: " . $endpoint);
+            throw new \Exception("Invalid login route: " . $this->endpoint);
         }
         if (200 !== $response->getStatusCode()) {
             return false;
