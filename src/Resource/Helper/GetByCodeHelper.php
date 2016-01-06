@@ -3,8 +3,6 @@ namespace Survos\Client\Resource\Helper;
 
 trait GetByCodeHelper
 {
-    use GetListHelper;
-
     /**
      * @param string $code
      * @param array $params

@@ -5,8 +5,6 @@ use Survos\Client\SurvosCriteria;
 
 trait GetOneByFieldHelper
 {
-    use GetListHelper;
-
     /**
      * @param array $criteria
      * @param array $params
