@@ -5,10 +5,12 @@ use Survos\Client\SurvosCriteria;
 
 trait GetOneByFieldHelper
 {
+    use GetListHelper;
+
     /**
      * @param array $criteria
      * @param array $params
-     * @return array
+     * @return array|null
      */
     public function getOneBy(array $criteria, $params = [])
     {

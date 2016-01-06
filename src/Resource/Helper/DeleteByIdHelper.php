@@ -4,7 +4,7 @@ namespace Survos\Client\Resource\Helper;
 trait DeleteByIdHelper
 {
     /**
-     * @param $id
+     * @param int $id
      * @return bool
      */
     public function deleteById($id)

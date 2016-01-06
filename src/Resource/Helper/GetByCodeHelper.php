@@ -3,9 +3,12 @@ namespace Survos\Client\Resource\Helper;
 
 trait GetByCodeHelper
 {
+    use GetListHelper;
+
     /**
-     * @param $id
-     * @return array
+     * @param string $code
+     * @param array $params
+     * @return array|null
      */
     public function getByCode($code, $params = [])
     {
