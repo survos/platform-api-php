@@ -4,10 +4,10 @@ namespace Survos\Client\Resource;
 
 use Survos\Client\Resource\Helper\GetListHelper;
 
-class AssignmentResource extends BaseResource
+class LocationResource extends BaseResource
 {
     use GetListHelper;
 
     /** @var string */
-    protected $resource = 'assignments';
+    protected $resource = 'locations';
 }

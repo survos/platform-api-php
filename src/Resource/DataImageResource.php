@@ -10,5 +10,6 @@ class DataImageResource extends BaseResource
 {
     use SaveHelper, GetListHelper, GetByIdHelper, DeleteByIdHelper;
 
+    /** @var string */
     protected $resource = 'images';
 }

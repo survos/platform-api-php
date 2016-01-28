@@ -1,21 +1,23 @@
 <?php
 namespace Survos\Client\Resource\Helper;
 
-use Survos\Client\SurvosCriteria;
-
 trait GetByCodeHelper
 {
     /**
-     * @param $id
-     * @return array
+     * @param string $code
+     * @param array $params
+     * @return array|null
      */
-    public function getByCode($code)
+    public function getByCode($code, $params = [])
     {
+        $params['code'] = $code;
         $items = $this->getList(
-            $page = 1,
-            $maxPerPage = 1,
-            $criteria = ['code' => $code],
-            $criteriaCmp = ['code' => SurvosCriteria::EQUAL]
+            1,
+            1,
+            ['code' => $code],
+            null,
+            null,
+            $params
         );
 
         // return first item

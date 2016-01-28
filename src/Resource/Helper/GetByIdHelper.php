@@ -4,8 +4,8 @@ namespace Survos\Client\Resource\Helper;
 trait GetByIdHelper
 {
     /**
-     * @param $id
-     * @return array
+     * @param int $id
+     * @return array|null
      */
     public function getById($id)
     {

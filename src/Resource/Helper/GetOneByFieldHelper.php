@@ -6,10 +6,11 @@ use Survos\Client\SurvosCriteria;
 trait GetOneByFieldHelper
 {
     /**
-     * @param $id
-     * @return array
+     * @param array $criteria
+     * @param array $params
+     * @return array|null
      */
-    public function getOneBy(array $criteria)
+    public function getOneBy(array $criteria, $params = [])
     {
         $cmpList = [];
         foreach($criteria as $key => $val) {
@@ -18,8 +19,10 @@ trait GetOneByFieldHelper
         $items = $this->getList(
             $page = 1,
             $maxPerPage = 1,
-            $criteria = $criteria,
-            $criteriaCmp = $cmpList
+            $criteria,
+            $cmpList,
+            null,
+            $params
         );
 
         // return first item

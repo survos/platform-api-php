@@ -15,8 +15,15 @@ class ProjectResource extends BaseResource
 {
     use SaveHelper, GetListHelper, GetByIdHelper, DeleteByIdHelper, GetByCodeHelper, GetOneByFieldHelper;
 
+    /** @var string */
     protected $resource = 'projects';
 
+    /**
+     * @param string $projectCode
+     * @param string $moduleCode
+     * @return array
+     * @throws SurvosException
+     */
     public function addModule($projectCode, $moduleCode)
     {
         $project = $this->getOneBy(['code' => $projectCode]);
