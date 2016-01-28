@@ -34,6 +34,9 @@ class SurvosCriteria
     /** Comparison type. */
     const IN = "in";
 
+    /** Comparison type. */
+    const BETWEEN = "between";
+
     /** "Order by" qualifier - ascending */
     const ASC = "asc";
 

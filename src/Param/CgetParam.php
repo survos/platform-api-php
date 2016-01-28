@@ -28,6 +28,7 @@ class CgetParam extends BaseParam
             'criteria'     => $criteria,
             'criteria_cmp' => $criteriaCmp,
             'order'        => $order,
+//            'XDEBUG_SESSION_START' => 1
         ];
 
         $this->params = array_merge($this->params, $other);
