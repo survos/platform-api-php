@@ -3,10 +3,11 @@
 namespace Survos\Client\Resource;
 
 use Survos\Client\Resource\Helper\GetListHelper;
+use Survos\Client\Resource\Helper\SaveHelper;
 
 class AssignmentResource extends BaseResource
 {
-    use GetListHelper;
+    use GetListHelper, SaveHelper;
 
     /** @var string */
     protected $resource = 'assignments';

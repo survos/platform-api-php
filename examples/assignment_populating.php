@@ -13,8 +13,15 @@ $assignments = getTrackingAssignments($client);
 
 foreach ($assignments['items'] as $assignment) {
     $tracks = getTracks($client, $assignment['scheduled_time'], $assignment['scheduled_end_time']);
+    $points = [];
+    foreach ($tracks['items'] as $track) {
+        $points[] = [$track['latitude'], $track['longitude']];
+    }
+    if (false !== $center = GetCenterFromDegrees($points)) {
+        $assignment['center_lat_lng'] = $center;
+        saveAssignment($client, $assignment);
+    }
 }
-
 
 function getTrackingTasks($client) {
     $resource = new \Survos\Client\Resource\TaskResource($client);
@@ -29,11 +36,57 @@ function getTrackingAssignments($client) {
     return $resource->getList(null, null, $filter, $comparison, null, $params);
 }
 
+function saveAssignment($client, $data) {
+    $resource = new \Survos\Client\Resource\AssignmentResource($client);
+    $response = $resource->save($data);
+}
+
 function getTracks($client, $fromTime, $toTime) {
-    //['2016-01-25', '2016-01-26']
-    $filter = ['timestamp' => ['min' => '2016-01-25 18:40:23', 'max' => '2016-01-26 18:40:23']];
-//    $filter = ['timestamp' => [$fromTime, $toTime]];
-    $comparison = null;//['timestamp' => \Survos\Client\SurvosCriteria::BETWEEN];
+    $filter = ['timestamp' => [$fromTime, $toTime]];
+    $comparison = ['timestamp' => \Survos\Client\SurvosCriteria::BETWEEN];
+    $orderBy = [['column' => 'timestamp', 'dir' => \Survos\Client\SurvosCriteria::ASC]];
     $resource = new \Survos\Client\Resource\TrackResource($client);
-    return $resource->getList(null, null, $filter, $comparison);
+    return $resource->getList(null, null, $filter, $comparison, $orderBy);
+}
+
+/**
+ * Get a center latitude,longitude from an array of like geopoints
+ * Taken from here http://stackoverflow.com/a/18623672
+ * Eventually can be used https://github.com/bdelespierre/php-kmeans
+ * @param array $data
+ * @return array|bool
+ */
+function GetCenterFromDegrees($data)
+{
+    if (!is_array($data)) return FALSE;
+
+    $num_coords = count($data);
+
+    $X = 0.0;
+    $Y = 0.0;
+    $Z = 0.0;
+
+    foreach ($data as $coord)
+    {
+        $lat = $coord[0] * pi() / 180;
+        $lon = $coord[1] * pi() / 180;
+
+        $a = cos($lat) * cos($lon);
+        $b = cos($lat) * sin($lon);
+        $c = sin($lat);
+
+        $X += $a;
+        $Y += $b;
+        $Z += $c;
+    }
+
+    $X /= $num_coords;
+    $Y /= $num_coords;
+    $Z /= $num_coords;
+
+    $lon = atan2($Y, $X);
+    $hyp = sqrt($X * $X + $Y * $Y);
+    $lat = atan2($Z, $hyp);
+
+    return array($lat * 180 / pi(), $lon * 180 / pi());
 }
