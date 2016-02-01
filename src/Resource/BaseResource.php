@@ -30,10 +30,10 @@ abstract class BaseResource
     protected function getGuzzle()
     {
         return new Client([
-            'base_uri' => $this->client->getEndpoint(),
-            'headers' => ['authorization' => 'Bearer '.$this->client->getAccessToken()],
-            'http_errors' => false,
-        ]);
+                              'base_uri' => $this->client->getEndpoint(),
+                              'headers' => ['authorization' => 'Bearer '.$this->client->getAccessToken()],
+                              'http_errors' => false,
+                          ]);
     }
 
     /**
@@ -43,7 +43,11 @@ abstract class BaseResource
     protected function parseResponse($response)
     {
         $content = $response->getBody()->getContents();
-        return json_decode($content, true);
+        $data = json_decode($content, true);
+        if (!is_array($data)) {
+            throw new SurvosException("Bad data in server response: ".substr($response->getBody(),0,200));
+        }
+        return $data;
     }
 
     /**
@@ -53,14 +57,12 @@ abstract class BaseResource
      */
     protected function assertResponse($response, $expectedCode = 200)
     {
-        $data = $this->parseResponse($response);
         if ($expectedCode !== $response->getStatusCode()) {
+            $data = $this->parseResponse($response);
             $message = is_array($data) ? json_encode($data) : 'Unknown error';
             throw new SurvosException($message);
         }
-        if (!is_array($data)) {
-            throw new SurvosException("Bad data in server response: ".substr($response->getBody(),0,200));
-        }
+
     }
 
     /**
