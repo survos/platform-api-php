@@ -53,10 +53,13 @@ abstract class BaseResource
      */
     protected function assertResponse($response, $expectedCode = 200)
     {
+        $data = $this->parseResponse($response);
         if ($expectedCode !== $response->getStatusCode()) {
-            $data = $this->parseResponse($response);
             $message = is_array($data) ? json_encode($data) : 'Unknown error';
             throw new SurvosException($message);
+        }
+        if (!is_array($data)) {
+            throw new SurvosException("Bad data in server response: ".substr($response->getBody(),0,200));
         }
     }
 
