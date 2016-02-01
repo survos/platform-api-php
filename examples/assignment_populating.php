@@ -1,5 +1,4 @@
 <?php
-//it's not ready yet.
 require __DIR__ . '/../vendor/autoload.php';
 
 $config = json_decode(file_get_contents(__DIR__.'/config.json'), true);
@@ -8,16 +7,15 @@ if (!$client->authorize($config['username'], $config['password'])) {
     throw new \Exception('Wrong credentials!');
 }
 
+$project = 'behattest';
+$memberCode = 'otest';
+$date = '2016-01-31';
 
-$assignments = getTrackingAssignments($client);
+$assignments = getTrackingAssignments($client, $project, $memberCode, $date);
 
 foreach ($assignments['items'] as $assignment) {
     $tracks = getTracks($client, $assignment['scheduled_time'], $assignment['scheduled_end_time']);
-    $points = [];
-    foreach ($tracks['items'] as $track) {
-        $points[] = [$track['latitude'], $track['longitude']];
-    }
-    if (false !== $center = GetCenterFromDegrees($points)) {
+    if (false !== $center = getTracksCenter($tracks)) {
         $assignment['center_lat_lng'] = $center;
         saveAssignment($client, $assignment);
     }
@@ -28,11 +26,24 @@ function getTrackingTasks($client) {
     return $resource->getList(null, null, ['task_type_code' => 'device']);
 }
 
-function getTrackingAssignments($client) {
-    $resource = new \Survos\Client\Resource\AssignmentResource($client);
+function getTrackingAssignments($client, $project = null, $memberCode = null, $date = null) {
+    $resource = new \Survos\Client\Resource\AssignmentResource($client, $params = []);
     $filter = ['score' => 0];
     $comparison = ['score' => \Survos\Client\SurvosCriteria::GREATER_THAN];
     $params = ['task_type_code' => 'device'];
+    if (null !== $project) {
+        $params['project_code'] = $project;
+    }
+    if (null !== $memberCode) {
+        $params['member_code'] = $memberCode;
+    }
+    if (null !== $date) {
+        $filter['scheduled_time'] = $date;
+        $filter['scheduled_end_time'] = $date;
+        $comparison['scheduled_time'] = \Survos\Client\SurvosCriteria::LESS_EQUAL;
+        $comparison['scheduled_end_time'] = \Survos\Client\SurvosCriteria::GREATER_EQUAL;
+
+    }
     return $resource->getList(null, null, $filter, $comparison, null, $params);
 }
 
@@ -47,6 +58,14 @@ function getTracks($client, $fromTime, $toTime) {
     $orderBy = [['column' => 'timestamp', 'dir' => \Survos\Client\SurvosCriteria::ASC]];
     $resource = new \Survos\Client\Resource\TrackResource($client);
     return $resource->getList(null, null, $filter, $comparison, $orderBy);
+}
+
+function getTracksCenter(array $tracks) {
+    $points = [];
+    foreach ($tracks['items'] as $track) {
+        $points[] = [$track['latitude'], $track['longitude']];
+    }
+    return GetCenterFromDegrees($points);
 }
 
 /**
