@@ -20,6 +20,7 @@ class SurvosClient
 
     /**
      * SurvosClient constructor.
+     *
      * @param string $endpoint
      */
     public function __construct($endpoint = 'https://demo.survos.com/api1.0/')
@@ -33,21 +34,35 @@ class SurvosClient
      * @return bool
      * @throws \Exception
      */
-    public function authorize($username, $password)
+    public function authorize($usernameOrAccessToken, $password = null, $clientId = null, $clientSecret = null)
     {
-        $guzzle = new Client(['http_errors' => false]);
-        $response = $guzzle->request('POST', $this->endpoint.'security/login', ['form_params' => [
-            'username' => $username, 'password' => $password
-        ]]);
-        if (404 == $response->getStatusCode()) {
-            throw new \Exception("Invalid login route: " . $this->endpoint);
+        if (is_null($password) && is_null($clientId) && is_null($clientSecret)) {
+            $this->accessToken = $usernameOrAccessToken;
+        } else {
+            $guzzle = new Client(['http_errors' => false]);
+            $response = $guzzle->request(
+                'POST',
+                $this->endpoint.'/oauth/v2/token',
+                [
+                    'form_params' => [
+                        'username'      => $usernameOrAccessToken,
+                        'password'      => $password,
+                        'grant_type'    => 'password',
+                        'client_id'     => $clientId,
+                        'client_secret' => $clientSecret,
+                    ],
+                ]
+            );
+            if (404 == $response->getStatusCode()) {
+                throw new \Exception("Invalid login route: ".$this->endpoint);
+            }
+            if (200 !== $response->getStatusCode()) {
+                return false;
+            }
+            $data = json_decode($response->getBody()->getContents(), true);
+            $this->accessToken = $data['access_token'];
         }
-        if (200 !== $response->getStatusCode()) {
-            return false;
-        }
-        $data = json_decode($response->getBody()->getContents(), true);
-        $this->accessToken = $data['accessToken'];
-        $this->loggedUser = $data['user'];
+
         return true;
     }
 
@@ -72,6 +87,6 @@ class SurvosClient
      */
     public function getLoggedUser()
     {
-        return $this->loggedUser;
+        return '';
     }
 }
