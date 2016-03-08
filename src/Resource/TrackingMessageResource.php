@@ -18,17 +18,15 @@ class TrackingMessageResource extends BaseResource
      */
     public function getByUuid($uuid, $params = [])
     {
-        $params['uuid'] = $uuid;
         $items = $this->getList(
             1,
             1,
             ['uuid' => $uuid],
             null,
-            null,
             $params
         );
 
         // return first item
-        return reset($items['items']);
+        return reset($items['hydra:member']);
     }
 }

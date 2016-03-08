@@ -29,11 +29,13 @@ abstract class BaseResource
      */
     protected function getGuzzle()
     {
-        return new Client([
-                              'base_uri' => $this->client->getEndpoint(),
-                              'headers' => ['authorization' => 'Bearer '.$this->client->getAccessToken()],
-                              'http_errors' => false,
-                          ]);
+        return new Client(
+            [
+                'base_uri'    => $this->client->getEndpoint(),
+                'headers'     => ['authorization' => 'Bearer '.$this->client->getAccessToken()],
+                'http_errors' => false,
+            ]
+        );
     }
 
     /**
@@ -57,9 +59,14 @@ abstract class BaseResource
      */
     protected function assertResponse($response, $expectedCode = 200)
     {
-        if ($expectedCode !== $response->getStatusCode()) {
+        $statusCode = $response->getStatusCode();
+        if ($expectedCode !== $statusCode) {
             $data = $this->parseResponse($response);
-            $message = is_array($data) ? json_encode($data) : 'Unknown error';
+            if (is_array($data) && isset($data['hydra:description'])) {
+                $message = $data['hydra:description'];
+            } else {
+                $message = is_array($data) ? json_encode($data) : 'Unknown error';
+            }
             throw new SurvosException($message);
         }
 
@@ -111,7 +118,7 @@ abstract class BaseResource
     protected function post(array $data)
     {
         $guzzle = $this->getGuzzle();
-        $response = $guzzle->post($this->resource, ['form_params' => $data]);
+        $response = $guzzle->post($this->resource, $data);
         $this->assertResponse($response, 200);
         return $this->parseResponse($response);
     }
@@ -125,7 +132,7 @@ abstract class BaseResource
     protected function put($id, array $data)
     {
         $guzzle = $this->getGuzzle();
-        $response = $guzzle->put($this->resource.'/'.$id, ['form_params' => $data]);
+        $response = $guzzle->put($this->resource.'/'.$id, ['body' => json_encode($data)]);
         $this->assertResponse($response, 200);
         return $this->parseResponse($response);
     }
@@ -139,7 +146,7 @@ abstract class BaseResource
     protected function patch($id, array $data)
     {
         $guzzle = $this->getGuzzle();
-        $response = $guzzle->patch($this->resource.'/'.$id, ['form_params' => $data]);
+        $response = $guzzle->patch($this->resource.'/'.$id, ['body' => json_encode($data)]);
         $this->assertResponse($response, 200);
         return $this->parseResponse($response);
     }

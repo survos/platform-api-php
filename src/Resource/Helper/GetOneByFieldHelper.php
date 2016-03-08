@@ -12,20 +12,16 @@ trait GetOneByFieldHelper
      */
     public function getOneBy(array $criteria, $params = [])
     {
-        $cmpList = [];
-        foreach($criteria as $key => $val) {
-            $cmpList[$key] = SurvosCriteria::EQUAL;
-        }
+
         $items = $this->getList(
             $page = 1,
             $maxPerPage = 1,
             $criteria,
-            $cmpList,
             null,
             $params
         );
 
         // return first item
-        return reset($items['items']);
+        return reset($items['hydra:member']);
     }
 }

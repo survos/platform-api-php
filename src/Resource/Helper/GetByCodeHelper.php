@@ -16,11 +16,10 @@ trait GetByCodeHelper
             1,
             ['code' => $code],
             null,
-            null,
             $params
         );
 
         // return first item
-        return reset($items['items']);
+        return reset($items['hydra:member']);
     }
 }

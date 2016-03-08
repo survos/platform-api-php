@@ -2,6 +2,9 @@
 
 namespace Survos\Client;
 
+use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
+use League\OAuth2\Client\Provider\GenericProvider;
+use League\OAuth2\Client\Token\AccessToken;
 use Survos\Client\Resource\AssignmentResource;
 use Survos\Client\Resource\MemberResource;
 use Survos\Client\Resource\UserResource;
@@ -39,28 +42,37 @@ class SurvosClient
         if (is_null($password) && is_null($clientId) && is_null($clientSecret)) {
             $this->accessToken = $usernameOrAccessToken;
         } else {
-            $guzzle = new Client(['http_errors' => false]);
-            $response = $guzzle->request(
-                'POST',
-                $this->endpoint.'/oauth/v2/token',
+            $provider = new GenericProvider(
                 [
-                    'form_params' => [
-                        'username'      => $usernameOrAccessToken,
-                        'password'      => $password,
-                        'grant_type'    => 'password',
-                        'client_id'     => $clientId,
-                        'client_secret' => $clientSecret,
-                    ],
+                    'clientId'                => $clientId,    // The client ID assigned to you by the provider
+                    'clientSecret'            => $clientSecret,   // The client password assigned to you by the provider
+                    'redirectUri'             => '/',
+                    'urlAuthorize'            => $this->endpoint.'/oauth/v2/auth',
+                    'urlAccessToken'          => $this->endpoint.'/oauth/v2/token',
+                    'urlResourceOwnerDetails' => '',
                 ]
             );
-            if (404 == $response->getStatusCode()) {
-                throw new \Exception("Invalid login route: ".$this->endpoint);
+
+            try {
+
+                // Try to get an access token using the resource owner password credentials grant.
+                $accessToken = $provider->getAccessToken(
+                    'password',
+                    [
+                        'username' => $usernameOrAccessToken,
+                        'password' => $password,
+                    ]
+                );
+
+            } catch (IdentityProviderException $e) {
+
+                // Failed to get the access token
+                exit($e->getMessage());
+
             }
-            if (200 !== $response->getStatusCode()) {
-                return false;
-            }
-            $data = json_decode($response->getBody()->getContents(), true);
-            $this->accessToken = $data['access_token'];
+
+            /** @type AccessToken $accessToken */
+            $this->accessToken = $accessToken->getToken();
         }
 
         return true;

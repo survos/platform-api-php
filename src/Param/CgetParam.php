@@ -18,18 +18,14 @@ class CgetParam extends BaseParam
         $page = null,
         $maxPerPage = null,
         $criteria = null,
-        $criteriaCmp = null,
         $order = null,
         $other = []
     ) {
-        $this->params = [
+        $this->params = array_merge($criteria,[
             'page'         => $page,
             'max_per_page' => $maxPerPage,
-            'criteria'     => $criteria,
-            'criteria_cmp' => $criteriaCmp,
             'order'        => $order,
-//            'XDEBUG_SESSION_START' => 1
-        ];
+        ]);
 
         $this->params = array_merge($this->params, $other);
     }

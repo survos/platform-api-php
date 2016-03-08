@@ -18,11 +18,10 @@ trait GetListHelper
         $page = null,
         $maxPerPage = null,
         array $criteria = null,
-        array $criteriaCmp = null,
         array $order = null,
         $other = []
     ) {
-        $param = new CgetParam($page, $maxPerPage, $criteria, $criteriaCmp, $order, $other);
+        $param = new CgetParam($page, $maxPerPage, $criteria, $order, $other);
         return $this->cget($param);
     }
 }
