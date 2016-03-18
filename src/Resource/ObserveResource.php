@@ -9,14 +9,19 @@ class ObserveResource extends BaseResource
 
     /**
      * @param array $data
+     * @param int|null $userId (usable only if API user is superuser)
      * @return array
      * @throws \Survos\Client\SurvosException
      */
-    public function postLocation(array $data)
+    public function postLocation(array $data, $userId = null)
     {
+        $path = $this->resource.'/location';
+        if ($userId) {
+            $path .= '/'.$userId;
+        }
         $guzzle = $this->getGuzzle();
         $response = $guzzle->post(
-            $this->resource.'/location',
+            $path,
             ['json' => $data]
         );
         $this->assertResponse($response, 200);
