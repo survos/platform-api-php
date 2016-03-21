@@ -16,18 +16,18 @@ class MemberResource extends BaseResource
     protected $resource = 'members';
 
     /**
-     * @param array $ids
+     * @param int $id
      * @param string $action "accept"|"reject"
      * @param string $comment
      * @param string $message Message to applicant
      * @return array
      * @throws \Survos\Client\SurvosException
      */
-    public function setApplicantsStatus(array $ids, $action, $comment = null, $message = null)
+    public function setApplicantsStatus($id, $action, $comment = null, $message = null)
     {
         $guzzle = $this->getGuzzle();
         $response = $guzzle->patch($this->resource.'/applicants/'.$action, ['form_params' => [
-            'ids' => $ids,
+            'id' => $id,
             'comment' => $comment,
             'message' => $message,
         ]]);
