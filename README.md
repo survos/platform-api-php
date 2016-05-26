@@ -12,7 +12,7 @@ if (!$client->authorize('otest', 'tt')) {
 }
 ```
 
-## Save item
+## Register user
 ```php
 use Survos\Client\Resource\UserResource;
 
@@ -22,8 +22,9 @@ $data = [
     'name' => 'Nick',
 ];
 $resource = new UserResource($client);;
-$item = $resource->save($data);
-$id = $item['id'];
+if ($resource->register($data)) {
+    //user has been created
+}
 ```
 
 ## Get item

@@ -12,4 +12,16 @@ class UserResource extends BaseResource
     use SaveHelper, GetListHelper, GetByIdHelper, DeleteByIdHelper, GetOneByFieldHelper;
 
     protected $resource = 'users';
+
+    /**
+     * @param array $data
+     * @return bool
+     * @throws \Survos\Client\SurvosException
+     */
+    public function register(array $data)
+    {
+        $guzzle = $this->getGuzzle();
+        $response = $guzzle->post('security/register', ['form_params' => $data]);
+        return 201 === $response->getStatusCode();
+    }
 }
