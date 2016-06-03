@@ -2,13 +2,12 @@
 
 namespace Survos\Client;
 
-use Survos\Client\Resource\AssignmentResource;
-use Survos\Client\Resource\MemberResource;
-use Survos\Client\Resource\UserResource;
 use GuzzleHttp\Client;
 
 class SurvosClient
 {
+    use GuzzleListener;
+
     /** @var string */
     private $endpoint;
 
@@ -35,7 +34,7 @@ class SurvosClient
      */
     public function authorize($username, $password)
     {
-        $guzzle = new Client(['http_errors' => false]);
+        $guzzle = new Client(['http_errors' => false, 'handler' => $this->getGuzzleHandler()]);
         $response = $guzzle->request('POST', $this->endpoint.'security/login', ['form_params' => [
             'username' => $username, 'password' => $password
         ]]);

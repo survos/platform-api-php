@@ -24,8 +24,6 @@ class ObserveResource extends BaseResource
             $path,
             ['json' => $data]
         );
-
-        $this->lastPath = $path; // ??
         $this->assertResponse($response, 200);
         return $this->parseResponse($response);
     }

@@ -4,21 +4,21 @@ namespace Survos\Client\Resource;
 
 use GuzzleHttp\Client;
 use Psr\Http\Message\ResponseInterface;
+use Survos\Client\GuzzleListener;
 use Survos\Client\SurvosClient;
 use Survos\Client\SurvosException;
 use Survos\Client\Param\CgetParam;
 
 abstract class BaseResource
 {
+    use GuzzleListener;
+
     /** @var string */
     protected $resource;
 
     /** @var SurvosClient */
     protected $client;
 
-
-    /** @var string */
-    protected $lastPath = null;
     /**
      * @param SurvosClient $client
      */
@@ -33,13 +33,14 @@ abstract class BaseResource
     protected function getGuzzle()
     {
         return new Client([
-                              'base_uri' => $this->client->getEndpoint(),
-                              'headers' => ['authorization' => 'Bearer '.$this->client->getAccessToken()],
-                              'http_errors' => false,
-                          ]);
+            'base_uri' => $this->client->getEndpoint(),
+            'headers' => ['authorization' => 'Bearer '.$this->client->getAccessToken()],
+            'http_errors' => false,
+            'handler' => $this->getGuzzleHandler()
+        ]);
     }
-    
-    
+
+
     /**
      * @return string
      */
@@ -51,6 +52,7 @@ abstract class BaseResource
     /**
      * @param ResponseInterface $response
      * @return array
+     * @throws SurvosException
      */
     protected function parseResponse($response)
     {
