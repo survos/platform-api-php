@@ -16,6 +16,9 @@ abstract class BaseResource
     /** @var SurvosClient */
     protected $client;
 
+
+    /** @var string */
+    protected $lastPath = null;
     /**
      * @param SurvosClient $client
      */
@@ -34,6 +37,15 @@ abstract class BaseResource
                               'headers' => ['authorization' => 'Bearer '.$this->client->getAccessToken()],
                               'http_errors' => false,
                           ]);
+    }
+    
+    
+    /**
+     * @return string
+     */
+    public function getLastPath()
+    {
+        return $this->lastPath;
     }
 
     /**

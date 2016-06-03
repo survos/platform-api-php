@@ -22,6 +22,8 @@ class UserResource extends BaseResource
     {
         $guzzle = $this->getGuzzle();
         $response = $guzzle->post('security/register', ['form_params' => $data]);
+        
+        // return $response;
         return 201 === $response->getStatusCode();
     }
 }
