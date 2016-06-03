@@ -15,7 +15,7 @@ trait GuzzleListener
     protected $lastRequest;
 
     /**
-     * @return array|null
+     * @return string|null
      */
     public function getLastResponseData()
     {
@@ -25,6 +25,9 @@ trait GuzzleListener
         return $this->lastResponse->getBody()->getContents();
     }
 
+    /**
+     * @return string|null
+     */
     public function getLastResponseStatus()
     {
         if (is_null($this->lastResponse)) {
@@ -33,6 +36,9 @@ trait GuzzleListener
         return $this->lastResponse->getStatusCode();
     }
 
+    /**
+     * @return string|null
+     */
     public function getLastRequestPath()
     {
         if (is_null($this->lastRequest)) {
