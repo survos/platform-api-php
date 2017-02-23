@@ -51,6 +51,29 @@ class SurvosClient
     }
 
     /**
+     * @param $accessToken
+     * @return bool
+     * @throws \Exception
+     */
+    public function authByToken($accessToken)
+    {
+        $guzzle = new Client(['http_errors' => false, 'handler' => $this->getGuzzleHandler()]);
+        $response = $guzzle->request('GET', $this->endpoint.'security/user', [
+            'headers' => ['authorization' => 'Bearer '.$accessToken]
+        ]);
+        if (404 == $response->getStatusCode()) {
+            throw new \Exception("Invalid login route: " . $this->endpoint);
+        }
+        if (200 !== $response->getStatusCode()) {
+            return false;
+        }
+        $data = json_decode($response->getBody()->getContents(), true);
+        $this->accessToken = $accessToken;
+        $this->loggedUser = $data;
+        return true;
+    }
+
+    /**
      * @return string
      */
     public function getEndpoint()
