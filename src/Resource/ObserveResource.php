@@ -27,4 +27,12 @@ class ObserveResource extends BaseResource
         $this->assertResponse($response, 200);
         return $this->parseResponse($response);
     }
+
+    public function saveResponses($data)
+    {
+        $guzzle = $this->getGuzzle();
+        $response = $guzzle->post("{$this->resource}/save-responses", ['json' => $data]);
+        $this->assertResponse($response, 200);
+        return $this->parseResponse($response);
+    }
 }
