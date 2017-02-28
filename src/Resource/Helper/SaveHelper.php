@@ -13,7 +13,7 @@ trait SaveHelper
         if (isset($data['id'])) {
             $id = $data['id'];
             unset($data['id']);
-            return $this->patch($id, $data);
+            return $this->put($id, $data);
         } else {
             return $this->post($data);
         }

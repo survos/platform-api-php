@@ -124,8 +124,8 @@ abstract class BaseResource
     protected function post(array $data)
     {
         $guzzle = $this->getGuzzle();
-        $response = $guzzle->post($this->resource, ['form_params' => $data]);
-        $this->assertResponse($response, 200);
+        $response = $guzzle->post($this->resource, ['json' => $data]);
+        $this->assertResponse($response, 201);
         return $this->parseResponse($response);
     }
 
@@ -138,7 +138,7 @@ abstract class BaseResource
     protected function put($id, array $data)
     {
         $guzzle = $this->getGuzzle();
-        $response = $guzzle->put($this->resource.'/'.$id, ['form_params' => $data]);
+        $response = $guzzle->put($this->resource.'/'.$id, ['json' => $data]);
         $this->assertResponse($response, 200);
         return $this->parseResponse($response);
     }
@@ -152,7 +152,7 @@ abstract class BaseResource
     protected function patch($id, array $data)
     {
         $guzzle = $this->getGuzzle();
-        $response = $guzzle->patch($this->resource.'/'.$id, ['form_params' => $data]);
+        $response = $guzzle->patch($this->resource.'/'.$id, ['json' => $data]);
         $this->assertResponse($response, 200);
         return $this->parseResponse($response);
     }

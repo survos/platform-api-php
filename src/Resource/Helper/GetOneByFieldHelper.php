@@ -19,7 +19,6 @@ trait GetOneByFieldHelper
             $itemsPerPage = 1
         );
 
-        // return first item
-        return reset($items['items']);
+        return $items['hydra:member'][0] ?? null;
     }
 }
