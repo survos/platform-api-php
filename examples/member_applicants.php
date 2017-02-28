@@ -11,7 +11,7 @@ if (!$client->authorize($config['username'], $config['password'])) {
 }
 
 $resource = new MemberResource($client);
-$data = $resource->getList(1, 100, ['enrollment_status_code' => 'applicant']);
+$data = $resource->getList(['enrollment_status_code' => 'applicant']);
 $applicants = $data['items'];
 
 foreach ($applicants as $applicant) {

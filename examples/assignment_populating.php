@@ -23,28 +23,24 @@ foreach ($assignments['items'] as $assignment) {
 
 function getTrackingTasks($client) {
     $resource = new \Survos\Client\Resource\TaskResource($client);
-    return $resource->getList(null, null, ['task_type_code' => 'device']);
+    return $resource->getList(['task_type_code' => 'device']);
 }
 
 function getTrackingAssignments($client, $project = null, $memberCode = null, $date = null) {
-    $resource = new \Survos\Client\Resource\AssignmentResource($client, $params = []);
-    $filter = ['score' => 0];
-    $comparison = ['score' => \Survos\Client\SurvosCriteria::GREATER_THAN];
-    $params = ['task_type_code' => 'device'];
+    $resource = new \Survos\Client\Resource\AssignmentResource($client);
+    $filter = ['score' => ['gte' => 0]];
+    $filter = ['task_type_code' => 'device'];
     if (null !== $project) {
-        $params['project_code'] = $project;
+        $filter['project_code'] = $project;
     }
     if (null !== $memberCode) {
-        $params['member_code'] = $memberCode;
+        $filter['member_code'] = $memberCode;
     }
     if (null !== $date) {
-        $filter['scheduled_time'] = $date;
-        $filter['scheduled_end_time'] = $date;
-        $comparison['scheduled_time'] = \Survos\Client\SurvosCriteria::LESS_EQUAL;
-        $comparison['scheduled_end_time'] = \Survos\Client\SurvosCriteria::GREATER_EQUAL;
-
+        $filter['scheduled_time']['after'] = $date;
+        $filter['scheduled_end_time']['before'] = $date;
     }
-    return $resource->getList(null, null, $filter, $comparison, null, $params);
+    return $resource->getList($filter);
 }
 
 function saveAssignment($client, $data) {
@@ -53,11 +49,10 @@ function saveAssignment($client, $data) {
 }
 
 function getTracks($client, $fromTime, $toTime) {
-    $filter = ['timestamp' => [$fromTime, $toTime]];
-    $comparison = ['timestamp' => \Survos\Client\SurvosCriteria::BETWEEN];
-    $orderBy = [['column' => 'timestamp', 'dir' => \Survos\Client\SurvosCriteria::ASC]];
+    $filter = ['timestamp' => ['after' => $fromTime, 'before' => $toTime]];
+    $orderBy = ['timestamp' => 'asc'];
     $resource = new \Survos\Client\Resource\TrackResource($client);
-    return $resource->getList(null, null, $filter, $comparison, $orderBy);
+    return $resource->getList($filter, $orderBy);
 }
 
 function getTracksCenter(array $tracks) {

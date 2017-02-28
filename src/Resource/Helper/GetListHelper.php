@@ -1,28 +1,30 @@
 <?php
 namespace Survos\Client\Resource\Helper;
 
-use Survos\Client\Param\CgetParam;
 
 trait GetListHelper
 {
     /**
+     * @param array $criteria
+     * @param array $order
      * @param int|null $page
-     * @param int|null $maxPerPage
-     * @param array|null $criteria
-     * @param array|null $criteriaCmp
-     * @param array|null $order
-     * @param array $other
+     * @param int|null $itemsPerPage
      * @return array
      */
     public function getList(
+        array $criteria = [],
+        array $orderBy = [],
         $page = null,
-        $maxPerPage = null,
-        array $criteria = null,
-        array $criteriaCmp = null,
-        array $order = null,
-        $other = []
+        $itemsPerPage = null
     ) {
-        $param = new CgetParam($page, $maxPerPage, $criteria, $criteriaCmp, $order, $other);
-        return $this->cget($param);
+        $params = array_merge($criteria, [
+            'page'         => $page,
+            'itemsPerPage' => $itemsPerPage,
+//            'XDEBUG_SESSION_START' => 1
+            ]);
+        if (!empty($orderBy)) {
+            $params['order'] = $orderBy;
+        }
+        return $this->cget(array_filter($params));
     }
 }

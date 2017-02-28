@@ -20,12 +20,10 @@ class TrackingMessageResource extends BaseResource
     {
         $params['uuid'] = $uuid;
         $items = $this->getList(
+            array_merge(['uuid' => $uuid], $params),
+            [],
             1,
-            1,
-            ['uuid' => $uuid],
-            null,
-            null,
-            $params
+            1
         );
 
         // return first item

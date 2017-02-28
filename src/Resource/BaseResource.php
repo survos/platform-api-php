@@ -7,7 +7,6 @@ use Psr\Http\Message\ResponseInterface;
 use Survos\Client\GuzzleListener;
 use Survos\Client\SurvosClient;
 use Survos\Client\SurvosException;
-use Survos\Client\Param\CgetParam;
 
 abstract class BaseResource
 {
@@ -80,13 +79,13 @@ abstract class BaseResource
     }
 
     /**
-     * @param CgetParam $param
+     * @param array $params
      * @return array
      */
-    protected function cget($param)
+    protected function cget($params)
     {
         $guzzle = $this->getGuzzle();
-        $response = $guzzle->get($this->resource, ['query' => $param->getParams()]);
+        $response = $guzzle->get($this->resource, ['query' => $params]);
         $this->assertResponse($response, 200);
         return $this->parseResponse($response);
     }

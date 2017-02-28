@@ -17,15 +17,8 @@ if (!$client->authorize($config['username'], $config['password'])) {
  */
 
 $resource = new DataImageResource($client);
-$filter = ['created_at' => '2015-06-25 22:40:54']; //OR 2015-09-16
-$comparison = ['created_at' => SurvosCriteria::GREATER_THAN];
+$filter = ['created_at' => ['after' => '2015-06-25 22:40:54', 'before' => '2015-06-26']];
+$filter['flatData'] = 'time=afternoon';
 
-$jsonSearch = [
-    'json_key'   => 'time',
-    'json_value' => 'afternoon',
-    'json_cmp'   => '=',
-];
-
-$data = $resource->getList(1, 100, $filter, $comparison, null, $jsonSearch);
+$data = $resource->getList($filter);
 $items = $data['items'];
-

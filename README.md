@@ -36,7 +36,8 @@ $item = $resource->getById($id);
 $page = 1;
 $maxPerPage = 10;
 $criteria = ['id' => $id];
-$response = $resource->getList($page, $maxPerPage, $criteria);
+$orderBy = ['id' => 'asc'];
+$response = $resource->getList($criteria, $orderBy, $page, $maxPerPage);
 ```
 ## Delete item
 ```php

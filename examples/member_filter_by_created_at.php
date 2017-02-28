@@ -12,7 +12,6 @@ if (!$client->authorize($config['username'], $config['password'])) {
 }
 
 $resource = new MemberResource($client);
-$filter = ['created_at' => '2015-09-16 18:40:23']; //OR 2015-09-16
-$comparison = ['created_at' => SurvosCriteria::GREATER_THAN];
-$data = $resource->getList(1, 100, $filter, $comparison);
+$filter = ['created_at' => ['after' => '2015-09-16 18:40:23', 'before' => '2015-09-20']];
+$data = $resource->getList($filter, [], 1, 100);
 $items = $data['items'];

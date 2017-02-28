@@ -12,12 +12,7 @@ trait GetByCodeHelper
     {
         $params['code'] = $code;
         $items = $this->getList(
-            1,
-            1,
-            ['code' => $code],
-            null,
-            null,
-            $params
+            array_merge(['code' => $code], $params)
         );
 
         // return first item

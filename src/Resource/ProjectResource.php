@@ -2,7 +2,6 @@
 
 namespace Survos\Client\Resource;
 
-use Survos\Client\Param\CgetParam;
 use Survos\Client\Resource\Helper\DeleteByIdHelper;
 use Survos\Client\Resource\Helper\GetByCodeHelper;
 use Survos\Client\Resource\Helper\GetByIdHelper;

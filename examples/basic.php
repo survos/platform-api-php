@@ -25,9 +25,9 @@ $item = $resource->getById($id);
 
 //user getList
 $page = 1;
-$maxPerPage = 10;
+$itemsPerPage = 10;
 $criteria = ['id' => $id];
-$response = $resource->getList($page, $maxPerPage, $criteria);
+$response = $resource->getList($criteria, [], $page, $itemsPerPage);
 
 
 //user delete
