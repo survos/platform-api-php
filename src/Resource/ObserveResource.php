@@ -35,4 +35,13 @@ class ObserveResource extends BaseResource
         $this->assertResponse($response, 200);
         return $this->parseResponse($response);
     }
+    
+    public function postToUrl($endPoint, $payload)
+    {
+        $guzzle = $this->getGuzzle();
+        $response = $guzzle->post($endPoint, $payload);
+        $this->assertResponse($response, 200);
+        return $this->parseResponse($response);
+    }
+    
 }
