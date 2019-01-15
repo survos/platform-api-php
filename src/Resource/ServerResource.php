@@ -7,10 +7,10 @@ use Survos\Client\Resource\Helper\GetListHelper;
 use Survos\Client\Resource\Helper\GetOneByFieldHelper;
 use Survos\Client\Resource\Helper\SaveHelper;
 
-class JobResource extends BaseResource
+class ServerResource extends BaseResource
 {
     use SaveHelper, GetListHelper, GetByIdHelper, DeleteByIdHelper, GetOneByFieldHelper;
 
     /** @var string */
-    protected $resource = 'jobs';
+    protected $resource = 'servers';
 }

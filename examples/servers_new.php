@@ -2,7 +2,7 @@
 require __DIR__.'/../vendor/autoload.php';
 
 use Survos\Client\SurvosClient;
-use Survos\Client\Resource\ProjectResource;
+use Survos\Client\Resource\ServerResource;
 
 $config = json_decode(file_get_contents(__DIR__.'/config.json'), true);
 $client = new SurvosClient($config['endpoint']);
@@ -11,11 +11,11 @@ if (!$client->authorize($config['username'], $config['password'])) {
 }
 
 // get all projects
-$resource = new ProjectResource($client);
+$resource = new ServerResource($client);
 $res = $resource->save(
     [
-        'title'       => "new poject",
-        'code'        => "new_project_code",
+        'title'       => "new server",
+        'code'        => "new_server_code",
         'timezone_id' => 1,
     ]
 );
